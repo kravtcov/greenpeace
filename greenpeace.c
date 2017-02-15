@@ -61,7 +61,7 @@ bool isNotRelatives(Node *x, Node *y)
 }
 
 bool parentsNotBrokenForBrokens(Node *x_broken, Node *x_child_with_no_true_par,
-                               Node *y_broken, Node *y_child_with_no_true_par)
+                                Node *y_broken, Node *y_child_with_no_true_par)
 {
     return (   !isParentBrokenForBorken(x_broken, x_child_with_no_true_par)
             && !isParentBrokenForBorken(y_broken, y_child_with_no_true_par));
@@ -163,6 +163,11 @@ Node* lca(Node *x, Node *y)
     if ((x == NULL) || (y == NULL))
         return NULL;
     
+    if (x->p == y)
+        return y;
+    if (y->p == x)
+        return x;
+
     Node *lca = destroyParents(x, y);
     repairParents(x, y);
     return lca;
